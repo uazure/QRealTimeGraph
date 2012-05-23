@@ -128,7 +128,9 @@ protected:
 private:
     QString graphTitle;
     QString graphUnit;
-    double x0,y0;
+    //plot area in widget coordinates
+    QRectF plotArea;
+
 
 
 };

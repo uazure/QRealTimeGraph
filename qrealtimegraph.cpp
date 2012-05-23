@@ -25,7 +25,7 @@ void QRealTimeGraph::paintEvent(QPaintEvent *)
 }
 
 void QRealTimeGraph::paintGrid(QPainter &painter) {
-    painter.drawLine();
+
 
 }
 
@@ -103,9 +103,12 @@ QRealTimeGraphSeries * QRealTimeGraph::getSeries(const QObject *obj, int channel
     return seriesMap.value(obj).value(channel);
 }
 
-QPointF QRealTimeGraph::transform(QPointF point)
+QPointF QRealTimeGraph::transform(const QPointF &point) const
 {
-
+    QPointF retval;
+    retval.setX(point.x()+plotArea.x());
+    retval.setY(point.y()+plotArea.y());
 }
+
 
 
