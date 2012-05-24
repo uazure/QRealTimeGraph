@@ -3,6 +3,8 @@
 #include <QObject>
 #include <QPointF>
 #include <QList>
+#include <QPen>
+
 class QRealTimeGraph;
 
 
@@ -23,8 +25,14 @@ public:
 
     //returns channel index of the obect
     int channel() const {return chan;};
-    //returns pointer to object
+    //returns pointer to data source object
     const QObject * object() const {return dataSourceObject;};
+    void setPen(const QPen &pen) {graphPen=pen;};
+    void setColor(const QColor &color) {graphPen.setColor(color);};
+    const QString & title() const {return graphTitle;};
+    void setTitle(const QString & title) {graphTitle=title;}
+    bool isVisible() {return visible;};
+    void setVisible(bool visibility) {visible=visibility;};
 
     //returns list of points for specified interval;
     virtual const QList<QPointF> & getData (int interval) const;
@@ -43,6 +51,9 @@ protected:
 private:
     int chan;
     QObject const *dataSourceObject;
+    QPen graphPen;
+    QString graphTitle;
+    bool visible;
 
 
 };

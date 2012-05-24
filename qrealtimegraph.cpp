@@ -29,7 +29,7 @@ void QRealTimeGraph::paintGrid(QPainter &painter) {
 
 }
 
-void QRealTimeGraph::setCurrentValue(double value, const QObject *obj, int channel)
+void QRealTimeGraph::setCurrentValue(const double value, const int channel, const QObject *obj)
 {
     //check obj
     if (obj==NULL) {
@@ -110,5 +110,35 @@ QPointF QRealTimeGraph::transform(const QPointF &point) const
     retval.setY(point.y()+plotArea.y());
 }
 
+void QRealTimeGraph::setColor(const QColor &color, const QObject *obj, int channel) {
+    QRealTimeGraphSeries *series=getSeries(obj, channel);
+    if (series) {
+        series->setColor(color);
+    }
+}
 
+void QRealTimeGraph::setPen(const QPen &pen, const QObject *obj, int channel)
+{
+    QRealTimeGraphSeries *series=getSeries(obj, channel);
+    if (series) {
+        series->setPen(pen);
+    }
+}
+
+void QRealTimeGraph::setTitle(const QString &title, const QObject *obj, int channel) {
+    QRealTimeGraphSeries *series=getSeries(obj, channel);
+    if (series) {
+        series->setTitle(title);
+    }
+}
+
+QString QRealTimeGraph::getTitle(const QObject *obj, int channel) const {
+    const QRealTimeGraphSeries *series=getSeries(obj,channel);
+    if (series) {
+        return series->title();
+    } else {
+        qDebug()<<"No series for object"<<obj<<"channel"<<channel<<"found";
+        return QString();
+    }
+}
 

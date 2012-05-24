@@ -29,6 +29,13 @@ public:
       */
     void setPen(const QPen &pen,const QObject *obj,int channel=0);
 
+    /** set title for the data series
+        \sa setGraphTitle(), setColor(), setPen() */
+    void setTitle(const QString &title, const QObject *obj,int channel=0);
+
+    QString getTitle(const QObject *obj, int channel=0) const;
+
+
     /** clears values for specified obj and channel
       \sa clearAllValues()
       */
@@ -96,15 +103,18 @@ public slots:
 
     \sa setColor(), setPen()
       */
-    void setCurrentValue(double value, const QObject *obj=NULL,int channel=0);
+    void setCurrentValue(const double value, const int channel=0, const QObject *obj=NULL);
 
     /** Detaches series for obj and channel from graph releasing the memory
       obj can be ommited if signal-slot connection used
+//FIXME:  if channel is not specified or channel=0 then all series for the object are released
       */
     void detach(const QObject * obj=NULL,int channel=0);
 
-    void setTitle(const QString &title) {graphTitle=title;}
-    const QString & getTitle() const {return graphTitle;}
+    /** set title for the graph.
+        \sa setTitle() */
+    void setGraphTitle(const QString &title) {graphTitle=title;}
+    const QString & getGraphTitle() const {return graphTitle;}
 
     void setUnit(const QString &unit) {graphUnit=unit;}
     const QString & getUnit() const {return graphUnit;}

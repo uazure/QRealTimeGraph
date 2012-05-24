@@ -1,1 +1,50 @@
 Real time graph widget for Qt
+Tested to compile with Qt 4.6
+
+(Working draft. To be updated)
+USAGE:
+1) Create QRealTimeGraph object and add it to your layout:
+QRealTimeGraph *rtgraph = new QRealTimeGraph(this);
+ui->rtgraphLayout->addWidget(rtgraph);
+
+Alternative way:
+use QtDesigner to place QRealTimeGraph widget
+
+2) Connect your data generator objects to setCurrentValue(double) slot
+
+For example you have *torrent object and you want to draw an upload speed
+graph. Then you need to emit ULspeed(double) and connect this signal to
+QRealTimeGraph::setCurrentValue(double) slot:
+
+
+connect(torrent, SIGNAL(ULspeed(double)),rtgraph,SLOT(setCurrentValue(double)));
+
+In case you want to have more than 1 graph for same data source object,
+you need to call setCurrentValue(double value, int channel) slot.
+For this you should have currentSpeed(double value,int channel) signal,
+where int channel is the unique number refering to the data type.
+
+Example:
+-----torrent object code-----
+emit currentSpeed(uploadSpeed,1);
+emit currentSpeed(downloadSpeed,2);
+------------end--------------
+
+connect (torrent,SIGNAL(currentSpeed(double,int),rtgraph,SLOT(setCurrentValue(double,int)));
+
+
+Alternative way:
+You can call slot directly. In this case you MUST specify channel and
+pointer to QObject. If your data source object is not QObject childe
+then you should convert pointer to your data source object to QObject
+pointer. Pointer is only used as a key for data series object
+inside graph object.
+
+Example:
+-----torrent object code-----
+rtgraph->setCurrentValue(uploadSpeed,1,(QObject) this);
+rtgraph->setCurrentValue(downloadSpeed,2,(QObject) this);
+
+3) setColor
+
+

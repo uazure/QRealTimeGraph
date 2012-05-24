@@ -9,9 +9,15 @@ QRealTimeGraphSeries::QRealTimeGraphSeries(QRealTimeGraph *graph, const QObject 
 {
     this->chan=channel;
     this->graph=graph;
-    data10m.reserve(graph->getResolution());
-    data1h.reserve(graph->getResolution());
+
+    #if QT_VERSION >= 0x040700
+        data10m.reserve(graph->getResolution());
+        data1h.reserve(graph->getResolution());
+    #endif
+
     dataSourceObject=obj;
+
+    visible=true;
 
 }
 
