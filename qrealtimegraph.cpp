@@ -8,6 +8,8 @@ QRealTimeGraph::QRealTimeGraph(QWidget *parent) :
 {
     steps=120;
     currentInterval=interval10m;
+    plotArea.setBottomLeft(QPointF(0,0));
+    plotArea.setTopRight(QPointF(QPoint(20,10)));
 }
 
 void QRealTimeGraph::paintEvent(QPaintEvent *)
@@ -103,11 +105,28 @@ QRealTimeGraphSeries * QRealTimeGraph::getSeries(const QObject *obj, int channel
     return seriesMap.value(obj).value(channel);
 }
 
+
 QPointF QRealTimeGraph::transform(const QPointF &point) const
 {
+    //point - is the point with plot coordinates
+    //plotArea - rectangle with plot (in plot coordinates)
     QPointF retval;
-    retval.setX(point.x()+plotArea.x());
-    retval.setY(point.y()+plotArea.y());
+    double vAspect,hAspect;
+    hAspect=plotArea.width()/width();
+    vAspect=plotArea.height()/height();
+
+    retval.setX((point.x()-plotArea.left())/hAspect);
+    retval.setY((point.y()-plotArea.right())/vAspect);
+    return retval;
+}
+
+QPointF QRealTimeGraph::invTransform(const QPointF &point) const {
+
+
+}
+
+void QRealTimeGraph::paintData(QPainter &painter) {
+
 }
 
 void QRealTimeGraph::setColor(const QColor &color, const QObject *obj, int channel) {
