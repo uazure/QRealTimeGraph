@@ -10,4 +10,5 @@ LIBS += -L.
 target.path = $$[QT_INSTALL_PLUGINS]/designer
 INSTALLS += target
 include(qrealtimegraph.pri)
+include(example.pri)
 OTHER_FILES += README

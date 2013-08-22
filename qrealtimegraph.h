@@ -81,8 +81,8 @@ public:
     void setResolution(int steps);
     int getResolution() const {return steps;}
 
-    void setInterval(Interval interval) {currentInterval=interval;};
-    Interval interval() const {return currentInterval;};
+    void setInterval(Interval interval) {currentInterval=interval;}
+    Interval interval() const {return currentInterval;}
 //    QList<Interval> intervals() const;
 //    QList<QString> intervalStringList() const;
 
@@ -130,8 +130,11 @@ protected:
     const QRealTimeGraphSeries * getSeries(const QObject *obj,int channel=0) const;
     QRealTimeGraphSeries * getSeries(const QObject *obj,int channel=0);
 
+    QList<QRealTimeGraphSeries*> getVisibleSeriesList() const;
+
+    QList<QRealTimeGraphSeries*> seriesList;
     QMap<const QObject*,QMap<int,QRealTimeGraphSeries*> > seriesMap;
-    QMap<QRealTimeGraphSeries *,bool> visibleMap;
+
     int steps;
     Interval currentInterval;
 
